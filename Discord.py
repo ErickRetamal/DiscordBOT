@@ -2,8 +2,6 @@ import discord
 from discord.ext import tasks, commands
 from riotwatcher import LolWatcher
 import os
-from discord import Interaction
-from discord.commands import slash_command 
 
 # Configuración de API y Token
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
