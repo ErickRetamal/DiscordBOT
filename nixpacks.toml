@@ -3,3 +3,13 @@ language = "python"
 
 [python]
 version = "3.12"  # o la versión de Python que desees usar
+
+[install]
+# Instalación de dependencias
+commands = [
+  "pip install -r requirements.txt"
+]
+
+[run]
+# Comando para iniciar el bot
+command = "python Discord.py"
