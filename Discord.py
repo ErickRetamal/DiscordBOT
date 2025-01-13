@@ -17,6 +17,7 @@ intents.members = True  # Permite acceder a los miembros del servidor
 intents.messages = True  # Permite manejar mensajes
 intents.presences = True  # Permite ver actividades de los usuarios
 
+# Crear el bot con prefijo "/"
 bot = commands.Bot(command_prefix='/', intents=intents)
 
 watcher = LolWatcher(RIOT_API_KEY)
