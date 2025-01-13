@@ -34,12 +34,16 @@ async def on_ready():
 @tasks.loop(seconds=60*60*24*7)  # Corre una vez cada semana
 async def send_weekly_request():
     channel = client.get_channel(1044454523726467163)  # Reemplaza con el ID de tu canal
-    message = "**¡Recordatorio semanal!**\nPor favor, envía tu ID de Riot (nombre de invocador de LoL) si no lo has hecho aún."
+    message = "**¡Recordatorio semanal!**\nPor favor, todos los usuarios que no hayan registrado su ID de Riot (nombre de invocador de LoL), envíenlo aquí."
 
     # Recorre todos los miembros del servidor y solicita el ID de Riot solo a los que no se han registrado
     for member in channel.guild.members:
         if member.id not in players:
-            await member.send(message)
+            try:
+                await channel.send(f"{member.mention}, {message}")
+            except discord.errors.HTTPException as e:
+                print(f"No se pudo enviar mensaje a {member.name}: {e}")
+                continue  # Ignorar el error y continuar con el siguiente miembro
 
 @client.event
 async def on_message(message):
