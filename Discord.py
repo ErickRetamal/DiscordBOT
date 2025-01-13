@@ -89,4 +89,6 @@ async def on_presence_update(before, after):
             except Exception:
                 pass
 
+print(f"Discord Token: {DISCORD_TOKEN}")
+
 client.run(DISCORD_TOKEN)
