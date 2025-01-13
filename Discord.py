@@ -1,4 +1,4 @@
-import discord
+iimport discord
 from discord.ext import tasks
 from riotwatcher import LolWatcher
 import os
@@ -24,7 +24,8 @@ async def on_ready():
     print(f'Bot conectado como {client.user}')
     send_weekly_rank.start()
 
-@tasks.loop(weeks=1)
+# Corre la tarea semanal (1 semana = 60 * 60 * 24 * 7 segundos)
+@tasks.loop(seconds=60*60*24*7)
 async def send_weekly_rank():
     channel = client.get_channel(1044454523726467163)  # Reemplaza con el ID de tu canal
     message = "**Resumen Semanal de Rangos:**\n"
