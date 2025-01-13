@@ -1,4 +1,4 @@
-iimport discord
+import discord
 from discord.ext import tasks
 from riotwatcher import LolWatcher
 import os
