@@ -1,0 +1,5 @@
+[build]
+language = "python"
+
+[python]
+version = "3.12"  # o la versión de Python que desees usar
