@@ -7,7 +7,13 @@ import os
 # Configuración de API y Token
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 RIOT_API_KEY = os.getenv('RIOT_API_KEY')
-print("RIOT_API_KEY:", RIOT_API_KEY)
+
+if not DISCORD_TOKEN:
+    raise ValueError("El token de Discord no está configurado. Verifica tu archivo .env.")
+if not RIOT_API_KEY:
+    raise ValueError("La API key de Riot no está configurada. Verifica tu archivo .env.")
+
+print("Tokens cargados correctamente.")
 
 intents = discord.Intents.default()
 intents.members = True  # Permite acceder a los miembros del servidor
@@ -37,8 +43,8 @@ async def send_weekly_rank():
 
         try:
             # Obtener información de LoL
-            summoner = watcher.summoner.by_name('REGIÓN', summoner_name)
-            rank_info = watcher.league.by_summoner('REGIÓN', summoner['id'])
+            summoner = watcher.summoner.by_name('LAS', summoner_name)
+            rank_info = watcher.league.by_summoner('LAS', summoner['id'])
             rank = rank_info[0]['tier'] + ' ' + rank_info[0]['rank'] if rank_info else "Sin rango"
 
             discord_user = await client.fetch_user(discord_id)
