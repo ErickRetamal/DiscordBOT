@@ -18,7 +18,7 @@ intents.messages = True  # Permite manejar mensajes
 intents.presences = True  # Permite ver actividades de los usuarios
 
 # Crear el bot con prefijo "/"
-bot = commands.Bot(command_prefix='/', intents=intents)
+bot = discord.Bot(intents=intents)
 
 watcher = LolWatcher(RIOT_API_KEY)
 
@@ -27,17 +27,20 @@ players = {}
 
 @bot.event
 async def on_ready():
-    print(f'Bot conectado como {bot.user}')
-    print("Comandos slash registrados correctamente.")
+    try:
+        await bot.sync_commands()  # Sincroniza los comandos slash
+        print(f'Bot conectado como {bot.user}. Comandos slash sincronizados.')
+    except Exception as e:
+        print(f'Error al sincronizar los comandos slash: {e}')
 
 # Registro de ID de Riot
-@bot.slash_command(name="register_riot", description="Registra tu ID de Riot (nombre#lema) en el sistema.")
+@bot.slash_command(name="Register_riot", description="Registra tu ID de Riot (nombre#lema) en el sistema.")
 async def register_riot(ctx, riot_id: str):
     players[ctx.author.id] = riot_id
     await ctx.send(f"{ctx.author.name} ha registrado su ID de Riot: {riot_id}.")
 
 # Ver el rango de un jugador
-@bot.slash_command(name="rank", description="Muestra el rango de LoL de un jugador registrado.")
+@bot.slash_command(name="Rank", description="Muestra el rango de LoL de un jugador registrado.")
 async def rank(ctx):
     if ctx.author.id not in players:
         await ctx.send(f"{ctx.author.name}, no estás registrado con un nombre de invocador. Usa `/register_riot <nombre#lema>` para registrarte.")
