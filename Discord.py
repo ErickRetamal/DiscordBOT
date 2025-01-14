@@ -45,14 +45,31 @@ async def rank(ctx):
 
     summoner_name = players[ctx.author.id]
     
+    import requests
+
+@bot.slash_command(name="rank", description="Muestra el rango de LoL de un jugador registrado.")
+async def rank(ctx):
+    if ctx.author.id not in players:
+        await ctx.send(f"{ctx.author.name}, no estás registrado con un nombre de invocador. Usa `/register_riot <nombre#lema>` para registrarte.")
+        return
+
+    summoner_name = players[ctx.author.id]
+    
     try:
         # Obtener información de LoL
         summoner = watcher.summoner.by_name('LAS', summoner_name)
         rank_info = watcher.league.by_summoner('LAS', summoner['id'])
         rank = rank_info[0]['tier'] + ' ' + rank_info[0]['rank'] if rank_info else "Sin rango"
         await ctx.send(f"{ctx.author.name}, tu rango en LoL es: {rank}")
+    
+    except requests.exceptions.RequestException as e:
+        # Error relacionado con la red (problema al conectar con la API de Riot)
+        await ctx.send(f"No se pudo obtener el rango para {ctx.author.name} debido a un problema de conexión con la API de Riot. Error: {str(e)}")
+    
     except Exception as e:
+        # Otros errores generales
         await ctx.send(f"No se pudo obtener el rango para {ctx.author.name}. Error: {str(e)}")
+
 
 # Solicitar ID de Riot a los miembros una vez a la semana
 @tasks.loop(seconds=60*60*24*7)  # Corre una vez cada semana
