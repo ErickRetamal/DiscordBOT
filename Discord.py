@@ -34,13 +34,13 @@ async def on_ready():
         print(f'Error al sincronizar los comandos slash: {e}')
 
 # Registro de ID de Riot
-@bot.slash_command(name="Register_riot", description="Registra tu ID de Riot (nombre#lema) en el sistema.")
+@bot.slash_command(name="register_riot", description="Registra tu ID de Riot (nombre#lema) en el sistema.")
 async def register_riot(ctx, riot_id: str):
     players[ctx.author.id] = riot_id
     await ctx.send(f"{ctx.author.name} ha registrado su ID de Riot: {riot_id}.")
 
 # Ver el rango de un jugador
-@bot.slash_command(name="Rank", description="Muestra el rango de LoL de un jugador registrado.")
+@bot.slash_command(name="rank", description="Muestra el rango de LoL de un jugador registrado.")
 async def rank(ctx):
     if ctx.author.id not in players:
         await ctx.send(f"{ctx.author.name}, no estás registrado con un nombre de invocador. Usa `/register_riot <nombre#lema>` para registrarte.")
